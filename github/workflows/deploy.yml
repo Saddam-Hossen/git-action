@@ -2,9 +2,11 @@ name: Java CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
@@ -22,3 +24,6 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install
+
+      - name: Run tests
+        run: mvn test
