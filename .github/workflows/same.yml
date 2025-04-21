@@ -1,4 +1,4 @@
-name: Hello Bro Workflow
+name: Same To Same
 
 on:
   push:
@@ -11,4 +11,4 @@ jobs:
 
     steps:
       - name: Print Hello Bro
-        run: echo "Hello Bro"
+        run: echo "Hello Bro Same to Same"
