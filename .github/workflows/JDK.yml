@@ -70,5 +70,5 @@ jobs:
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=~/.ssh/do_known_hosts \
             ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} '
-             java --version
+              nohup java -Xms64m -Xmx128m -jar /www/wwwroot/snvn.deepseahost.com/git-action/app.jar --server.port=3084 > /www/wwwroot/snvn.deepseahost.com/git-action/app.log 2>&1 &
             '
