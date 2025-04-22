@@ -37,4 +37,4 @@ jobs:
         run: mvn test
 
       - name: Run the project
-        run: java -cp target/classes com.example.git_action.GitActionApplication
+        run: java -jar target/git-action-0.0.1-SNAPSHOT.jar
