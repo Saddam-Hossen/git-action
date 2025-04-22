@@ -72,5 +72,6 @@ jobs:
             ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} '
               pkill -f "java -jar" || true
               nohup java -Xms64m -Xmx128m -jar /root/app.jar --server.port=3084 > /root/app.log 2>&1 &
+              sleep 5
+              ps -ef | grep "java -jar" || echo "Java application failed to start"
             '
-     
