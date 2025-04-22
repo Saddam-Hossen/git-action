@@ -49,18 +49,18 @@ jobs:
         with:
           name: java-jar
 
-      - name: Set up SSH key and known_hosts
+      - name: Set up SSH key and custom known_hosts
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.DO_SSH_KEY }}" > ~/.ssh/key.pem
           chmod 600 ~/.ssh/key.pem
-          ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/do_known_hosts
 
       - name: Upload JAR to DigitalOcean
         run: |
           scp -i ~/.ssh/key.pem \
             -o StrictHostKeyChecking=no \
-            -o UserKnownHostsFile=~/.ssh/known_hosts \
+            -o UserKnownHostsFile=~/.ssh/do_known_hosts \
             git-action-0.0.1-SNAPSHOT.jar \
             ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }}:/root/app.jar
 
@@ -68,7 +68,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/key.pem \
             -o StrictHostKeyChecking=no \
-            -o UserKnownHostsFile=~/.ssh/known_hosts \
+            -o UserKnownHostsFile=~/.ssh/do_known_hosts \
             ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} '
               pkill -f "java -jar" || true
               nohup java -Xms64m -Xmx128m -jar /root/app.jar --server.port=3084 > /root/app.log 2>&1 &
