@@ -8,6 +8,7 @@ public class GitActionApplication {
 
 	public static void check() {
 		System.out.println("Hello Saddam. Are you okay? Yes");
+		System.out.println("Do you love me.");
 	}
 
 	public static void main(String[] args) {

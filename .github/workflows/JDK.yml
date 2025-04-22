@@ -71,5 +71,5 @@ jobs:
             -o UserKnownHostsFile=~/.ssh/do_known_hosts \
             ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} '
               pkill -f "java -jar" || true
-              nohup java -Xms64m -Xmx128m -jar /www/wwwroot/snvn.deepseahost.com/git-action/app.jar --server.port=3084 > /www/wwwroot/meritcareacademy.com/git-action/app.log 2>&1 &
+              nohup java -Xms64m -Xmx128m -jar /www/wwwroot/snvn.deepseahost.com/git-action/app.jar --server.port=3084 > /www/wwwroot/snvn.deepseahost.com/git-action/app.log 2>&1 &
             '
