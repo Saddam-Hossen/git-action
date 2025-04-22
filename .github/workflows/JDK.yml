@@ -70,5 +70,5 @@ jobs:
             -o StrictHostKeyChecking=no \
             -o UserKnownHostsFile=~/.ssh/do_known_hosts \
             ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} '
-              pkill -f "java -jar" || true
+             java --version
             '
