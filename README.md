@@ -18,13 +18,56 @@ This creates:
 
 ---
 
-### Update Your Setup Accordingly
 
-#### ✅ Upload public key to VPS
+When you upload the **public key** to your **VPS**, it should be saved inside the following file on your VPS:
+
+---
+
+### 📍 **Location on VPS:**
+```bash
+~/.ssh/authorized_keys
+```
+
+---
+
+### 🧭 Steps to Upload Public Key to VPS:
+
+Assuming your public key file is `~/.ssh/userservice_key.pub`:
+
+#### ✅ Option 1: Using `ssh-copy-id` (Easy & Safe)
+```bash
+ssh-copy-id -i ~/.ssh/userservice_key.pub youruser@your-vps-ip
+```
+
+This command:
+- Connects to your VPS
+- Appends your public key to the `~/.ssh/authorized_keys` file automatically
+- Sets the correct permissions
+
+---
+
+#### ✅ Option 2: Manual Method (if `ssh-copy-id` not available)
 
 ```bash
-ssh-copy-id -i ~/.ssh/userservice_ssh.pub root@your.server.ip
+cat ~/.ssh/userservice_key.pub | ssh youruser@your-vps-ip 'mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh'
 ```
+
+This command:
+- Creates `.ssh` directory (if not exists)
+- Appends your public key to `authorized_keys`
+- Sets the correct permissions
+
+---
+
+### 🔐 Permissions Check (Important):
+```bash
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+```
+
+---
+
+Let me know your VPS username or if you're using root access, and I can tailor it even more 👌
 
 #### 🔐 Add the **private key** to GitHub Secrets
 
