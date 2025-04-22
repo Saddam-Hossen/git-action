@@ -1,4 +1,4 @@
-name: Java CI
+name: Java CI + Deploy
 
 on:
   push:
@@ -36,5 +36,33 @@ jobs:
       - name: Run tests
         run: mvn test
 
-      - name: Run the project
-        run: java -jar target/git-action-0.0.1-SNAPSHOT.jar
+      - name: Upload JAR Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-jar
+          path: target/git-action-0.0.1-SNAPSHOT.jar
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download JAR Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: java-jar
+
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.DO_SSH_KEY }}" > key.pem
+          chmod 600 key.pem
+
+      - name: Upload JAR to DigitalOcean
+        run: |
+          scp -i key.pem git-action-0.0.1-SNAPSHOT.jar ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }}:/root/app.jar
+
+      - name: Run app on DigitalOcean (Port 3084 + Custom Memory)
+        run: |
+          ssh -i key.pem ${{ secrets.DO_USER }}@${{ secrets.DO_HOST }} '
+            pkill -f "java -jar" || true
+            nohup java -Xms64m -Xmx128m -jar /root/app.jar --server.port=3084 > /root/app.log 2>&1 &
+          '
