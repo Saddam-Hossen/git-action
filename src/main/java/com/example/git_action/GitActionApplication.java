@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GitActionApplication {
 
 	public static void check() {
-		System.out.println("Hello Saddam. Are you okay?");
+		System.out.println("Hello Saddam. Are you okay? Yes");
 	}
 
 	public static void main(String[] args) {
